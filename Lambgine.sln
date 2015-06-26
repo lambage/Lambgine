@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lambgine", "Lambgine\Lambgine.vcxproj", "{15B63A19-28C4-4782-BB05-65566CCEA0FD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LambgineTest", "LambgineTest\LambgineTest.vcxproj", "{DAD19386-7230-46CC-BDC2-A173E5988EDC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD} = {15B63A19-28C4-4782-BB05-65566CCEA0FD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		DebugDLL|Win32 = DebugDLL|Win32
+		DebugDLL|x64 = DebugDLL|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		ReleaseDLL|Win32 = ReleaseDLL|Win32
+		ReleaseDLL|x64 = ReleaseDLL|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Debug|Win32.Build.0 = Debug|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Debug|x64.ActiveCfg = Debug|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Debug|x64.Build.0 = Debug|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.DebugDLL|Win32.ActiveCfg = Debug|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.DebugDLL|Win32.Build.0 = Debug|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.DebugDLL|x64.ActiveCfg = Debug|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.DebugDLL|x64.Build.0 = Debug|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Release|Win32.ActiveCfg = Release|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Release|Win32.Build.0 = Release|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Release|x64.ActiveCfg = Release|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.Release|x64.Build.0 = Release|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.ReleaseDLL|Win32.ActiveCfg = Release|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.ReleaseDLL|Win32.Build.0 = Release|Win32
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.ReleaseDLL|x64.ActiveCfg = Release|x64
+		{15B63A19-28C4-4782-BB05-65566CCEA0FD}.ReleaseDLL|x64.Build.0 = Release|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Debug|Win32.Build.0 = Debug|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Debug|x64.ActiveCfg = Debug|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Debug|x64.Build.0 = Debug|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.DebugDLL|Win32.ActiveCfg = Debug|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.DebugDLL|Win32.Build.0 = Debug|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.DebugDLL|x64.ActiveCfg = Debug|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.DebugDLL|x64.Build.0 = Debug|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Release|Win32.ActiveCfg = Release|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Release|Win32.Build.0 = Release|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Release|x64.ActiveCfg = Release|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.Release|x64.Build.0 = Release|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|Win32.ActiveCfg = Release|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|Win32.Build.0 = Release|Win32
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|x64.ActiveCfg = Release|x64
+		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
