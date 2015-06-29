@@ -20,18 +20,17 @@ static void SizeHandler(GLFWwindow* window, int width, int height);
 
 static void WindowRefreshHandler(GLFWwindow *window);
 
-static const int defaultWindowWidth = 640;
-static const int defaultWindowHeight = 480;
-
 /******************************************************/
 /* LambWindow private implementation                */
 /******************************************************/
 
 struct LambWindow::LambWindowImpl
 {
-	LambWindowImpl(const char *title, int monitor) :
+	LambWindowImpl(const char *title, int width, int height, int monitor) :
 		mWindowTitle(title),
 		mWindow(nullptr),
+		mWindowWidth(width),
+		mWindowHeight(height),
 		mLastMonitor(-1)
 	{
 		if (!glfwInit())
@@ -83,8 +82,8 @@ struct LambWindow::LambWindowImpl
 		}
 		else
 		{
-			newWindow = glfwCreateWindow(defaultWindowWidth, defaultWindowHeight, mWindowTitle, NULL, mWindow);
-			SetSize(defaultWindowWidth, defaultWindowHeight);
+			newWindow = glfwCreateWindow(mWindowWidth, mWindowHeight, mWindowTitle, NULL, mWindow);
+			SetSize(mWindowWidth, mWindowHeight);
 		}
 
 		glfwDestroyWindow(mWindow);
@@ -138,12 +137,12 @@ struct LambWindow::LambWindowImpl
 		return monitors;
 	}
 
-	void Invoke(std::function<void()> function)
+	void Invoke(std::function<void(LambWindow*)> function)
 	{
-		std::packaged_task<void()> task(function);
+		std::packaged_task<void(LambWindow*)> task(function);
 		std::future<void> result = task.get_future();
 		{
-			std::lock_guard<std::mutex> lock(tasks_mutex);
+			std::lock_guard<std::mutex> lock(tasksMutex);
 			tasks.push_back(&task);
 		}
 		result.get();
@@ -159,8 +158,8 @@ struct LambWindow::LambWindowImpl
 	int mWindowWidth;
 	int mWindowHeight;
 
-	std::deque<std::packaged_task<void()> *> tasks;
-	std::mutex tasks_mutex;
+	std::deque<std::packaged_task<void(LambWindow*)> *> tasks;
+	std::mutex tasksMutex;
 };
 
 
@@ -168,11 +167,21 @@ struct LambWindow::LambWindowImpl
 /* LambWindow public interface implementation       */
 /******************************************************/
 
-LAMBGINE_API LambWindow::LambWindow(const char *title, int monitor) :
-mImpl(std::make_unique<LambWindow::LambWindowImpl>(title, monitor))
+LAMBGINE_API LambWindow::LambWindow(const char *title, int width, int height, int monitor) :
+mImpl(std::make_unique<LambWindow::LambWindowImpl>(title, width, height, monitor))
 {
 	glfwMakeContextCurrent(mImpl->GetWindow());
 	glfwSwapInterval(1);
+
+	glfwSetWindowUserPointer(mImpl->GetWindow(), this);
+	glfwSetKeyCallback(mImpl->GetWindow(), ::KeyHandler);
+	glfwSetCharCallback(mImpl->GetWindow(), ::CharHandler);
+	glfwSetCursorPosCallback(mImpl->GetWindow(), ::CursorHandler);
+	glfwSetMouseButtonCallback(mImpl->GetWindow(), ::MouseButtonHandler);
+	glfwSetScrollCallback(mImpl->GetWindow(), ::ScrollHandler);
+	glfwSetWindowSizeCallback(mImpl->GetWindow(), ::SizeHandler);
+
+	glfwSetWindowRefreshCallback(mImpl->GetWindow(), ::WindowRefreshHandler);
 }
 
 LAMBGINE_API LambWindow::~LambWindow()
@@ -180,39 +189,23 @@ LAMBGINE_API LambWindow::~LambWindow()
 }
 
 
-LAMBGINE_API void LambWindow::MainLoop()
-{
-	//sets up context and function callback pointers
-	_internalSetup();
-
-	//pure virtual setup method
-	Setup();
-
-	while (!glfwWindowShouldClose(mImpl->GetWindow()))
-	{
-		Refresh();
-
-		glfwSwapBuffers(mImpl->GetWindow());
-		glfwPollEvents();
-	}
-}
-
 LAMBGINE_API void LambWindow::Refresh()
 {
 	{
-		std::unique_lock<std::mutex> lock(mImpl->tasks_mutex);
+		std::unique_lock<std::mutex> lock(mImpl->tasksMutex);
 		while (!mImpl->tasks.empty())
 		{
 			auto task(mImpl->tasks.front());
 			mImpl->tasks.pop_front();
 			lock.unlock();
-			(*task)();
+			(*task)(this);
 			lock.lock();
 		}
 	}
 
 	//pure virtual render method
 	Render(glfwGetTime());
+	glfwSwapBuffers(mImpl->GetWindow());
 }
 
 LAMBGINE_API bool LambWindow::KeyHandler(int key, int scancode, int action, int mods)
@@ -300,6 +293,11 @@ LAMBGINE_API void LambWindow::Close()
 	mImpl->Close();
 }
 
+LAMBGINE_API bool LambWindow::ShouldClose()
+{
+	return glfwWindowShouldClose(mImpl->GetWindow()) != 0;
+}
+
 LAMBGINE_API void LambWindow::Setup()
 {
 
@@ -320,25 +318,14 @@ LAMBGINE_API void LambWindow::ListMonitors()
 	mImpl->ListMonitors();
 }
 
-LAMBGINE_API void LambWindow::Invoke(std::function<void()> function)
+LAMBGINE_API void LambWindow::Invoke(std::function<void(LambWindow*)> function)
 {
 	mImpl->Invoke(function);
 }
 
 void LambWindow::_internalSetup()
 {
-	glfwMakeContextCurrent(mImpl->GetWindow());
-	glfwSwapInterval(1);
 
-	glfwSetWindowUserPointer(mImpl->GetWindow(), this);
-	glfwSetKeyCallback(mImpl->GetWindow(), ::KeyHandler);
-	glfwSetCharCallback(mImpl->GetWindow(), ::CharHandler);
-	glfwSetCursorPosCallback(mImpl->GetWindow(), ::CursorHandler);
-	glfwSetMouseButtonCallback(mImpl->GetWindow(), ::MouseButtonHandler);
-	glfwSetScrollCallback(mImpl->GetWindow(), ::ScrollHandler);
-	glfwSetWindowSizeCallback(mImpl->GetWindow(), ::SizeHandler);
-
-	glfwSetWindowRefreshCallback(mImpl->GetWindow(), ::WindowRefreshHandler);
 }
 
 void LambWindow::_internalSetMonitor(int monitor)

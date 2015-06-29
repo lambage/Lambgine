@@ -14,8 +14,14 @@
 #endif
 
 #include <Lambgine\Log.h>
-#include <Lambgine\LambWindow.h>
-#include <Lambgine\lua\LambLua.h>
+#include <Lambgine\lua\LambLua.h>  //for external reference
+#include <Lambgine\LambWindow.h>   //for external reference
+
+#include <functional>
+#include <memory>
+
+class LambLua;
+class LambWindow;
 
 class Lambgine
 {
@@ -24,6 +30,8 @@ public:
 	LAMBGINE_API ~Lambgine();
 
 	LAMBGINE_API LambLua& Lua() const;
+
+	LAMBGINE_API std::shared_ptr<LambWindow> NewWindow(const char *title, int width, int height, int monitor);
 
 private:
 	struct LambgineImpl;

@@ -16,7 +16,7 @@
 class LambWindow
 {
 public:
-	LAMBGINE_API LambWindow(const char *title, int monitor = 0);
+	LAMBGINE_API LambWindow(const char *title, int width, int height, int monitor = 0);
 	LAMBGINE_API virtual ~LambWindow();
 
 	LAMBGINE_API virtual bool KeyHandler(int key, int scancode, int action, int mods);
@@ -29,17 +29,16 @@ public:
 	LAMBGINE_API virtual void Refresh();
 
 	LAMBGINE_API void Close();
+	LAMBGINE_API bool ShouldClose();
 
 	LAMBGINE_API virtual void Setup();
 	LAMBGINE_API virtual void Render(double ms);
-
-	LAMBGINE_API void MainLoop();
 
 	LAMBGINE_API GLFWwindow* GetWindow();
 
 	LAMBGINE_API void ListMonitors();
 
-	LAMBGINE_API void Invoke(std::function<void()> function);
+	LAMBGINE_API void Invoke(std::function<void(LambWindow*)> function);
 
 private:
 	struct LambWindowImpl;

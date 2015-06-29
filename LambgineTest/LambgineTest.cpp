@@ -10,10 +10,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	int retVal = 0;
 	try
 	{
-		//LambWindow window("test window", 0);
-		//window.MainLoop();
-
 		Lambgine engine;
+		engine.NewWindow("one", 640, 480, 0);
+		engine.NewWindow("two", 640, 480, 0);
+
 		retVal = engine.Lua().DoTerminal();
 	}
 	catch (std::runtime_error ex)
