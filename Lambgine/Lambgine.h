@@ -7,11 +7,7 @@
 #ifndef LAMBGINE_H
 #define LAMBGINE_H
 
-#ifdef LAMBGINE_EXPORTS
-#define LAMBGINE_API __declspec(dllexport)
-#else
-#define LAMBGINE_API __declspec(dllimport)
-#endif
+#include <Lambgine\LambgineExports.h>
 
 #include <Lambgine\Log.h>
 #include <Lambgine\lua\LambLua.h>  //for external reference

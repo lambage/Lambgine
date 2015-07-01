@@ -40,6 +40,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lua\LambLua.h">
+      <Filter>Header Files\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LambgineExports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +69,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lua\LambLua.cpp">
+      <Filter>Source Files\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

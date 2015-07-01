@@ -1,11 +1,8 @@
 #pragma once
-extern "C" {
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-}
 
+#include <Lambgine\LambgineExports.h>
 #include <memory>
+struct lua_State;
 
 class LambLua
 {

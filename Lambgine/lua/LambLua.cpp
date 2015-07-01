@@ -1,18 +1,21 @@
 #include <stdafx.h>
-#include <Lambgine.h>
 #include "LambLua.h"
+
+#include <Lambgine.h>
+
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
 
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define lua_c
-
-#include "lua.h"
-
-#include "lauxlib.h"
-#include "lualib.h"
+#include "LuaTest.h"
+#include <luacppinterface.h>
 
 #define EXIT_CONDITION -2
 
@@ -49,18 +52,21 @@ static const char *progname = LUA_PROGNAME;
 
 struct LambLua::LambLuaImpl
 {
-	lua_State* L = nullptr;
-	LambLuaImpl()
+	std::shared_ptr<lua_State> L = nullptr;
+	Lua lua;
+	LambLuaImpl() :
+		L(luaL_newstate(), lua_close),
+		lua(L)
 	{
-		L = luaL_newstate();
-		luaL_openlibs(L);
+		lua.LoadStandardLibraries();
+		OpenTest(&lua);
 	}
 
 	~LambLuaImpl()
 	{
-		if (L != nullptr)
+		if (L.get() != nullptr)
 		{
-			lua_close(L);
+			lua_close(L.get());
 		}
 	}
 
@@ -205,27 +211,27 @@ struct LambLua::LambLuaImpl
 		int status;
 		const char *oldprogname = progname;
 		progname = NULL;
-		while ((status = loadline(L)) != -1) {
+		while ((status = loadline(L.get())) != -1) {
 			if (status == EXIT_CONDITION)
 			{
-				lua_settop(L, 0);  /* clear stack */
+				lua_settop(L.get(), 0);  /* clear stack */
 				luai_writeline();
 				progname = oldprogname;
 				return LUA_OK;
 			}
-			if (status == LUA_OK) status = docall(L, 0, LUA_MULTRET);
-			report(L, status);
-			if (status == LUA_OK && lua_gettop(L) > 0) {  /* any result to print? */
-				luaL_checkstack(L, LUA_MINSTACK, "too many results to print");
-				lua_getglobal(L, "print");
-				lua_insert(L, 1);
-				if (lua_pcall(L, lua_gettop(L) - 1, 0, 0) != LUA_OK)
-					l_message(progname, lua_pushfstring(L,
+			if (status == LUA_OK) status = docall(L.get(), 0, LUA_MULTRET);
+			report(L.get(), status);
+			if (status == LUA_OK && lua_gettop(L.get()) > 0) {  /* any result to print? */
+				luaL_checkstack(L.get(), LUA_MINSTACK, "too many results to print");
+				lua_getglobal(L.get(), "print");
+				lua_insert(L.get(), 1);
+				if (lua_pcall(L.get(), lua_gettop(L.get()) - 1, 0, 0) != LUA_OK)
+					l_message(progname, lua_pushfstring(L.get(),
 					"error calling " LUA_QL("print") " (%s)",
-					lua_tostring(L, -1)));
+					lua_tostring(L.get(), -1)));
 			}
 		}
-		lua_settop(L, 0);  /* clear stack */
+		lua_settop(L.get(), 0);  /* clear stack */
 		luai_writeline();
 		progname = oldprogname;
 		return status;
@@ -244,7 +250,7 @@ LAMBGINE_API LambLua::~LambLua()
 
 LAMBGINE_API lua_State* LambLua::GetLuaState()
 {
-	return mImpl->L;
+	return mImpl->L.get();
 }
 
 LAMBGINE_API int LambLua::DoTerminal()

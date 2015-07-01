@@ -11,8 +11,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	try
 	{
 		Lambgine engine;
-		engine.NewWindow("one", 640, 480, 0);
-		engine.NewWindow("two", 640, 480, 0);
+		//engine.NewWindow("one", 640, 480, 0);
+		//engine.NewWindow("two", 640, 480, 0);
 
 		retVal = engine.Lua().DoTerminal();
 	}

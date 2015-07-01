@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lambgine", "Lambgine\Lambgine.vcxproj", "{15B63A19-28C4-4782-BB05-65566CCEA0FD}"
 EndProject
@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LambgineTest", "LambgineTes
 	ProjectSection(ProjectDependencies) = postProject
 		{15B63A19-28C4-4782-BB05-65566CCEA0FD} = {15B63A19-28C4-4782-BB05-65566CCEA0FD}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaCppInterface", "luacppinterface\LuaCppInterface\LuaCppInterface.vcxproj", "{45975324-0A0E-4989-8E08-B235E4F893CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,22 @@ Global
 		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|Win32.Build.0 = Release|Win32
 		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|x64.ActiveCfg = Release|x64
 		{DAD19386-7230-46CC-BDC2-A173E5988EDC}.ReleaseDLL|x64.Build.0 = Release|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Debug|Win32.Build.0 = Debug|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Debug|x64.ActiveCfg = Debug|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Debug|x64.Build.0 = Debug|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.DebugDLL|Win32.ActiveCfg = Debug|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.DebugDLL|Win32.Build.0 = Debug|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.DebugDLL|x64.ActiveCfg = Debug|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.DebugDLL|x64.Build.0 = Debug|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Release|Win32.ActiveCfg = Release|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Release|Win32.Build.0 = Release|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Release|x64.ActiveCfg = Release|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.Release|x64.Build.0 = Release|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.ReleaseDLL|Win32.ActiveCfg = Release|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.ReleaseDLL|Win32.Build.0 = Release|Win32
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.ReleaseDLL|x64.ActiveCfg = Release|x64
+		{45975324-0A0E-4989-8E08-B235E4F893CA}.ReleaseDLL|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
